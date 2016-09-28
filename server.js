@@ -1,7 +1,11 @@
 const express = require('express');
 const {json} = require('body-parser');
-const cors = require('cors');
+const mongoose = require('mongoose');
+// const cors = require('cors');
 const app = express();
+const port = 4000;
+const mongoUri = 'mongodb://localhost:27017/DBproducts';
+
 
 // const mongojs = require('mongojs');
 // const db = mongojs('ecommerce', ['products']);
@@ -10,12 +14,16 @@ const app = express();
 //   mongojs: mongojs
 // }
 
-const port = 4000;
+
 
 app.use(json());
-app.use(cors());
+// app.use(cors());
 
-const mainCtrl = require('./mainCtrl');
+mongoose.connect(mongoUri);
+mongoose.connection.once('open', () => console.log(`Connected to MongoDB at ${ mongoUri}`));
+
+
+const mainCtrl = require('./products');
 
 // app.get('/api/products/:id', mainCtrl.getById);
 // app.get('/api/products', mainCtrl.getProducts);
